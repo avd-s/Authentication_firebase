@@ -10,7 +10,9 @@ const firebaseConfig = {
   databaseURL: "https://settle-login-page.firebaseio.com",
   projectId: "settle-login-page",
   storageBucket: "settle-login-page.appspot.com",
- 
+  messagingSenderId: "306571897576",
+  appId: "1:306571897576:web:a607fd1ebeb1456432775d",
+  measurementId: "G-FVZ3H3PBC6"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -23,13 +25,39 @@ const [pw,setpw] = useState('');
 
 
   function signup(email,pw){
+    
+    
+    if (firebase.auth().currentUser) {
+   
+      console.log("USER ALREADY EXIST");
+      
+    } else{
     firebase.auth().createUserWithEmailAndPassword(email, pw).catch(function(error) {
-      // Handle Errors here.
+     
       var errorCode = error.code;
       var errorMessage = error.message;
-      // ...
+
+      console.log(errorCode);
+      console.log(errorMessage);
+      
+    }).then(function(msg){
+      console.log(msg);
+      console.log("SIGN UP SUCCESS")
+    });
+    }
+  }
+
+  function login(email,pw){
+    firebase.auth().signInWithEmailAndPassword(email, pw).catch(function(error) {   
+         
+      console.log(error);
+
+    }).then(function(msg){
+      console.log(msg);
+      console.log("LOGIN SUCCESS")
     });
   }
+
   
 
 
@@ -50,6 +78,10 @@ const [pw,setpw] = useState('');
     <Button 
         onPress = {()=>signup(email,pw) }
         title = "Sign up"
+       />
+      <Button 
+        onPress = {()=>login(email,pw) }
+        title = "Log in"
        />
        
 
