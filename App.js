@@ -27,12 +27,13 @@ const [pw,setpw] = useState('');
   function signup(email,pw){
     
     
-    if (firebase.auth().currentUser) {
-   
-      console.log("USER ALREADY EXIST");
-      
-    } else{
-    firebase.auth().createUserWithEmailAndPassword(email, pw).catch(function(error) {
+    
+    firebase.auth().createUserWithEmailAndPassword(email, pw).then(function(msg){
+
+      console.log(msg);
+      console.log("SIGN UP SUCCESS")
+
+    }).catch(function(error) {
      
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -40,16 +41,13 @@ const [pw,setpw] = useState('');
       console.log(errorCode);
       console.log(errorMessage);
       
-    }).then(function(msg){
-      console.log(msg);
-      console.log("SIGN UP SUCCESS")
     });
-    }
+    
   }
 
   function login(email,pw){
     firebase.auth().signInWithEmailAndPassword(email, pw).catch(function(error) {   
-         
+
       console.log(error);
 
     }).then(function(msg){
